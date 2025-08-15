@@ -25,3 +25,80 @@
         1年の月の名前を扱うときとか固定長がいいかもね
         取り出し方→a[0], a[1]....
     
+〇関数
+    ・各仮引数の型を宣言しなければならない。
+        fn print_labeled_measurement(value: i32, unit_label: char)
+    ・関数本体は文と式を含む
+        fn main() {
+            let y = {
+                let x = 3; →文（セミコロンがついている。） 
+                x + 1 →式
+            };
+            println!("The value of y is: {}", y);
+        }
+
+    ・戻り値のある関数
+        returnで早期から値を返すこともできるが、暗黙的に最後の式を返してくれるよ。
+        戻り値に名前は付けないが型宣言が必要なんだ・・・♠ 「->」これで。
+
+        fn main() {
+            let x = plus_one(5);
+
+            println!("The value of x is: {}", x);
+        }
+
+        fn plus_one(x: i32) -> i32 {
+            x + 1;
+        }
+
+        上の式はエラーになる。i32型を返すといってるのに、文を返しているため。
+        返り値はなしで、main()実行時、let x = ()になってしまう。（空のタプル）
+
+〇制御フロー
+    ・if文
+        let文の中でifを使うと以下のようになる。
+            let condition = true;
+            let number = if condition { 5 } else { 6 };
+        同じ変数には同じ型のものしか代入しようとしてはいけない。コンパイル時に迷うからね...♠
+            let condition = true;
+            let number = if condition { 5 } else { "バンジーガム" };　数値型とStr型が混同している。
+    
+    ・ループ
+        fn main() {
+            let mut count = 0;
+            'counting_up: loop { 'counting_upというラベル
+                println!("count = {}", count);
+                let mut remaining = 10;
+
+                loop {
+                    println!("remaining = {}", remaining);　
+                    if remaining == 9 { 
+                        break; 内側のループブレイク
+                    }
+                    if count == 2 {
+                        break 'counting_up; 外側のループブレイク
+                    }
+                    remaining -= 1;
+                }
+
+                count += 1;
+            }
+            println!("End count = {}", count);
+        }
+    ・forループ
+        fn main() {
+            let a = [10, 20, 30, 40, 50];
+
+            for element in a {
+                println!("the value is: {}", element);
+            }
+        }
+
+        fn main() {
+            for number in (1..4).rev() {
+                println!("{}!", number);
+            }
+            println!("LIFTOFF!!!");
+        }
+
+        pythonとほぼ同じ...♠

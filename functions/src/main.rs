@@ -1,7 +1,7 @@
 fn main() {
-    another_function(5);
-}
-
-fn another_function(x: i32) {
-    println!("The value of x is: {}", x);   // xの値は{}です
+    let y = {
+        let x = 4;
+        x
+    };
+    println!("number is:{}", y);
 }
