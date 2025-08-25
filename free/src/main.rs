@@ -33,6 +33,20 @@ impl Summary for Tweet {
     }
 }
 
+// 引数としてのトレイト
+pub fn notify（item： &impl Summary）{ 
+    println!("Breaking news! {}", item.summarize());
+}
+
+// 複数のトレイト境界を＋構文で指定。
+pub fn notify_2 <T: Summary + Display>(item: &T) { // pub fn notify_2 (item: &(impl Summary + Diplay)) {}
+}
+
+// where句を使ったトレイト境界
+pub some_function<T, U>(t: &T, u: &U) -> i32
+    where T: Display + Clone,
+          U: Clone + Debug
+
 fn main(){
     let tweet = Tweet {
         username: String::from("horse_ebooks"),
@@ -56,4 +70,5 @@ fn main(){
 
     println!("New article available! {}", article.summarize_author());
     
+    notify(&article) // 引数としてのトレイト
 }
