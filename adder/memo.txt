@@ -1,0 +1,20 @@
+・assert!マクロはテストの何らかの条件がbool値の時に有効。
+・assert_eq!とassert_ne!はそれぞれ==と=!を用いている。
+・Result<T, E>を使う場合は以下。
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() -> Result<(), String> {
+        if 2 + 2 == 4 {
+            Ok(())
+        } else {
+            Err(String::from("two plus two does not equal four"))
+        }
+    }
+}
+
+戻り値の型→Result<(), String>
+
+・テストをする際、使用したいスレッド数を指定できる。
+→cargo test -- --test-threads=1
+
