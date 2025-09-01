@@ -18,3 +18,5 @@ mod tests {
 ・テストをする際、使用したいスレッド数を指定できる。
 →cargo test -- --test-threads=1
 
+・cargo test -- --nocapture
+オプションで-- --nocaptureをつけることで、println!のマクロなどの出力をしてくれるようになる。
