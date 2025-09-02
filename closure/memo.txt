@@ -1,0 +1,14 @@
+〇クロージャとは
+let expensive_result = simulated_expensive_calculation(intensity);
+変数に関数の戻り値を保存する的な。上はちょっとしたクロージャ。
+
+・定義方法
+let expensive_closure = |num| {};
+numが仮引数になる。2つ以上あるなら、|num1, num2|のように記述する。
+どうやら関数ではないらしい、定義。
+型注釈は必要ないですよ、と。
+
+let s = example_closure(String::from("hello")); 
+→この時点でexample_closureの型が推論される。|String| -> Stringとして推論される。
+let n = example_closure(5); →コンパイルエラー
+最初の呼び出し型で型が確定される。柔軟性皆無。
