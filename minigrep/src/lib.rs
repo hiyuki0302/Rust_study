@@ -18,7 +18,7 @@ impl Config {
         let query = args[1].clone();
         let filename = args[2].clone();
         
-        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+        let case_sensitive = env::var("CASE_INSENSITIVE").is_err(); // StructでTrueかFalseになる
 
         Ok(Config { query, filename, case_sensitive })
     }
@@ -31,9 +31,9 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> { // Boxはトレイト
     f.read_to_string(&mut contents)?;
 
     let results = if config.case_sensitive {
-        search(&config.query, &contents)
+        search(&config.query, &contents) // Trueの場合
     } else {
-        search_case_insensitive(&config.query, &contents)
+        search_case_insensitive(&config.query, &contents) // Falseの場合
     };
 
     for line in results {
