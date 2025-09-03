@@ -1,29 +1,35 @@
-pub trait Iterator {
-    type Item; 
-    // Type Itemは関連型。Itemとしてイテレータが生成する要素の型を指定する必要がある。
-
-    fn next(&mut self) -> Option<Self::Item>;
+struct Counter {
+    count: u32,
 }
 
-fn main() {
-    let v1 = vec![2, 5, 1];
+impl Counter {
+    fn new() -> Counter {
+        Counter { count: 0 }
+    }
+}
 
-    let mut v1_iter = v1.iter(); // Item = &i32
+impl Iterator for Counter { // Counter型に対してIteratorトレイト
+    type Item = u32;
 
-    println!("{:?}", v1_iter.next()); // Some(2)
-    println!("{:?}", v1_iter.next()); // Some(5)
-    println!("{:?}", v1_iter.next()); // Some(1)
+    fn next(&mut self) -> Option<Self::Item> {
+        self.count += 1;
+
+        if self.count < 6 {
+            Some(self.count)
+        } else {
+            None
+        }
+    }
 }
 
 #[test]
-fn iterator_demonstration() {
-    let v1 = vec![1, 2, 3];
+fn calling_next_directly() {
+    let mut counter = Counter::new();
 
-    let mut v1_iter = v1.iter(); 
-
-    assert_eq!(v1_iter.next(), Some(&1));
-    assert_eq!(v1_iter.next(), Some(&2));
-    assert_eq!(v1_iter.next(), Some(&3));
-    assert_eq!(v1_iter.next(), None);
+    assert_eq!(counter.next(), Some(1));
+    assert_eq!(counter.next(), Some(2));
+    assert_eq!(counter.next(), Some(3));
+    assert_eq!(counter.next(), Some(4));
+    assert_eq!(counter.next(), Some(5));
+    assert_eq!(counter.next(), None);
 }
-
