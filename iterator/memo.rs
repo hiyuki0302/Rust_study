@@ -61,3 +61,28 @@ fn filters_by_size() {
         ]
     );
 }
+
+-----------------------------------------------------------------------------------------
+struct Counter {
+    count: u32,
+}
+
+impl Counter {
+    fn new() -> Counter {
+        Counter { count: 0 }
+    }
+}
+
+impl Iterator for Counter { // Counter型に対してIteratorトレイト
+    type Item = u32;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.count += 1;
+
+        if self.count < 6 {
+            Some(self.count)
+        } else {
+            None
+        }
+    }
+}

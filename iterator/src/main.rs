@@ -1,35 +1,19 @@
-struct Counter {
-    count: u32,
-}
+extern crate minigrep;
 
-impl Counter {
-    fn new() -> Counter {
-        Counter { count: 0 }
+use std::env;
+use std::process;
+
+use minigrep::Config;
+
+fn main() {
+    let config = Config::new(env::args()).unwrap_or_else(|err| {
+        eprintln!("Problem parsing arguments: {}", err);
+        process::exit(1);
+    });
+
+    if let Err(e) = minigrep::run(config) { // runがErrを返しているか。フルパスで呼び出している。
+        // この関数はエラー検知が目的のため、Okの場合なにも返す必要がない。
+        println!("Application error: {}", e);
+        process::exit(1);
     }
-}
-
-impl Iterator for Counter { // Counter型に対してIteratorトレイト
-    type Item = u32;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.count += 1;
-
-        if self.count < 6 {
-            Some(self.count)
-        } else {
-            None
-        }
-    }
-}
-
-#[test]
-fn calling_next_directly() {
-    let mut counter = Counter::new();
-
-    assert_eq!(counter.next(), Some(1));
-    assert_eq!(counter.next(), Some(2));
-    assert_eq!(counter.next(), Some(3));
-    assert_eq!(counter.next(), Some(4));
-    assert_eq!(counter.next(), Some(5));
-    assert_eq!(counter.next(), None);
 }
